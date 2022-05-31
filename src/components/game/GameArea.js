@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import { Spinner, Container } from 'react-bootstrap'
 import mans from '../../srcImg/mans.png'
+import { Box, Text, Image, List, Heading } from 'grommet'
 
 const GameArea = (props) => {
     const {user} = props
@@ -16,19 +17,39 @@ const GameArea = (props) => {
             itemIndex = character.ownedItems.map(item => {
                 console.log('this is item in GameArea', item)
                 return (
-                    <li>Item: {item.item.description}</li>
+                    <Box margin="xxsmall">
+                        <Text size="small"><br/>{item.item.description}<br/></Text>
+                    </Box>
                 )
             })
         }
         return (
-            <div>
-                <p>{character.name}</p>
-                <p>{character.coins}</p>
-                <ul>
-                    {itemIndex}
-                </ul>
-                <img width= "450" height= "450" src= {mans} alt="img placeholder"></img>
-            </div>
+            <Box
+                direction="column"
+			    border={{ color: 'brand', size: 'large' }}
+			    pad="medium"
+			    margin={{
+				    top: "3em",
+				    left: "35em",
+				    right: "35em"
+			    }}
+            >
+                <Heading margin="auto">{character.name}</Heading>
+                <List 
+                    primaryKey="label"
+                    secondaryKey="value"
+                    data={[
+                        { label: "Character class: ", value: `${character.class}` },
+                        { label: "Character coins: ", value: `${character.coins}` },
+                    ]}
+                />
+                <Text>Character inventory: {itemIndex}</Text>
+                <Image 
+                    fit="contain"
+                    src={mans} 
+                    alt="img placeholder"
+                />
+            </Box>
         )
     }
     if (!character) {
